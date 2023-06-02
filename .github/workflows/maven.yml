@@ -21,9 +21,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        server-id: 'github'
+        setting-path: ${{ github.workspace }}
         cache: maven
-    - name: Build, test, and analyze
+    - name: Publish to Github Packages Apache Maven
+      run: mvn deployy -s $GITHUB_WORKSPACE/settings.xml
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=jatihusen -Dsonar.projectKey=jatihusen_Basic-Java-Maven
+          GITHUB_TOKEN: ${{ github.token }}
